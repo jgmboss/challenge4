@@ -7,10 +7,17 @@ import javafx.scene.control.TextField; //must now import this for the textfield
 import javafx.scene.layout.Pane;
 import javafx.event.ActionEvent;
 import javafx.stage.WindowEvent;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import java.util.Optional;
+import javafx.stage.WindowEvent;
 
 public class Challenge4
 {
-    private static TextField txtFieldMessage;
+    private static TextField txtFieldRanking;
+    private static TextField txtFieldUni;
+    private static TextField txtFieldCountry;
 
     public static void main (String args[])
     {
@@ -27,6 +34,7 @@ public class Challenge4
     {
 
         Stage stage = new Stage();
+        stage.setOnCloseRequest((WindowEvent we) -> displayCloseDialog(we));
         stage.setTitle("Top Universities by Jogerson");
         stage.setResizable(false);
         Pane rootPane = new Pane();
@@ -36,40 +44,72 @@ public class Challenge4
         stage.show();
 
         Button btn = new Button();
-        txtFieldMessage = new TextField();
-        txtFieldMessage.setLayoutX(50);
-        txtFieldMessage.setLayoutY(100);
-        txtFieldMessage.setPrefWidth(200);
-        txtFieldMessage.setPromptText("Enter Ranking");
-        rootPane.getChildren().add(txtFieldMessage);
+        txtFieldRanking = new TextField();
+        txtFieldRanking.setLayoutX(50);
+        txtFieldRanking.setLayoutY(100);
+        txtFieldRanking.setPrefWidth(200);
+        txtFieldRanking.setPromptText("Enter Ranking");
+        rootPane.getChildren().add(txtFieldRanking);
 
         Button btn2 = new Button();
-        txtFieldMessage = new TextField();
-        txtFieldMessage.setLayoutX(50);
-        txtFieldMessage.setLayoutY(150);
-        txtFieldMessage.setPrefWidth(200);
-        txtFieldMessage.setPromptText("Enter Name");
-        rootPane.getChildren().add(txtFieldMessage);
+        txtFieldUni = new TextField();
+        txtFieldUni.setLayoutX(50);
+        txtFieldUni.setLayoutY(150);
+        txtFieldUni.setPrefWidth(200);
+        txtFieldUni.setPromptText("Enter Name");
+        rootPane.getChildren().add(txtFieldUni);
 
         Button btn3 = new Button();
-        txtFieldMessage = new TextField();
-        txtFieldMessage.setLayoutX(50);
-        txtFieldMessage.setLayoutY(200);
-        txtFieldMessage.setPrefWidth(200);
-        txtFieldMessage.setPromptText("Enter Country");
-        rootPane.getChildren().add(txtFieldMessage);
+        txtFieldCountry = new TextField();
+        txtFieldCountry.setLayoutX(50);
+        txtFieldCountry.setLayoutY(200);
+        txtFieldCountry.setPrefWidth(200);
+        txtFieldCountry.setPromptText("Enter Country");
+        rootPane.getChildren().add(txtFieldCountry);
 
         btn.setText("Enter");
         btn.setLayoutX(50);
         btn.setLayoutY(500);
         btn.setOnAction((ActionEvent ae) -> printMessage());
         rootPane.getChildren().add(btn);
+        rootPane.getChildren().add(btn2);
+        rootPane.getChildren().add(btn3);
+        
+        
+    }
+
+    public static void displayCloseDialog(WindowEvent we){
+        System.out.println("close button was clicked!");
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Look, a confirmationDialog");
+        alert.setContentText("Are you sure you want to quit?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+        {
+            terminate();
+        }
+        else 
+        {
+            we.consume();
+        }
+    }
+
+    public static void terminate()
+    {
+        System.out.println("Bye, bye!");
+        System.exit(0);
     }
 
     private static void printMessage()
     {
-        String message = txtFieldMessage.getText();
-        System.out.println(message);
+        String ranking = txtFieldRanking.getText();
+        System.out.println(ranking);
+        String uni = txtFieldUni.getText();
+        System.out.println(uni);
+        String country = txtFieldCountry.getText();
+        System.out.println(country);
     }
 }
-
